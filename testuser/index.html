@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://sooza.com.br/src/sooza_light.png">
+  
+  <!-- Carregamento dos dados externos da pasta ./data/config.js -->
+  <script src="./config.js"></script>
+  
+  <!-- SEO & Metadados Dinâmicos -->
+  <title id="seo-title">${p.name || 'Bio Link'} (@${cleanUser}) | Links e Redes Sociais</title>
+  <meta id="seo-desc" name="description" content="${p.bio || 'Confira todos os links e conteúdos oficiais.'}">
+  <meta id="seo-author" name="author" content="${p.name || ''}">
+  <meta name="robots" content="index, follow">
+  <link id="seo-canonical" rel="canonical" href="${fullShareUrl}">
+
+  <!-- GEO / Local SEO -->
+  <meta id="geo-region" name="geo.region" content="${p.geoRegion || 'BR-RJ'}">
+  <meta id="geo-placename" name="geo.placename" content="${p.geoPlacename || 'Rio de Janeiro'}">
+
+  <!-- Open Graph / Redes Sociais -->
+  <meta property="og:type" content="profile">
+  <meta id="og-title" property="og:title" content="${p.name || 'Bio Link'} (@${cleanUser})">
+  <meta id="og-desc" property="og:description" content="${p.bio || 'Confira todos os links e conteúdos.'}">
+  <meta id="og-image" property="og:image" content="${p.avatar || ''}">
+  <meta id="og-url" property="og:url" content="${fullShareUrl}">
+  <meta property="og:locale" content="pt_BR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta id="tw-title" name="twitter:title" content="${p.name || 'Bio Link'} (@${cleanUser})">
+  <meta id="tw-desc" name="twitter:description" content="${p.bio || 'Confira todos os links e conteúdos.'}">
+  <meta id="tw-image" name="twitter:image" content="${p.avatar || ''}">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<script>
+  fetch('https://soozadigital.com/index-base.html')
+    .then(response => {
+      if (!response.ok) throw new Error('Erro ao carregar o index-base.html');
+      return response.text();
+    })
+    .then(html => {
+      // Substitui todo o conteúdo do documento atual pelo layout da base
+      document.open();
+      document.write(html);
+      document.close();
+    })
+    .catch(err => {
+      console.error("Erro ao carregar a página base:", err);
+      document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:20vh;'>Erro ao carregar o perfil. Tente novamente mais tarde.</h2>";
+    });
+</script>
+</html>
+  
